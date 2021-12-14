@@ -4,14 +4,14 @@ How to Setup and deploy
 
 2. clone to the local to build a container image use Dockerfile for customize 
 
-3. build your containerimage `podman build --tag railimage:versiontag -f ./Dockerfile` or Docker or automation trigger to quay.io 
+3. build your containerimage `$ podman build --tag railimage:versiontag -f ./Dockerfile` or Docker or automation trigger to quay.io 
 
 4. push to container image or use your local registry
 ``` bash
-  podman login registry.quay.io
-  podman image ls
-  podman tag <image ID> <username>/railimage:versioningtag
-  podman push <username>/railimage:versioningtag
+  $ podman login registry.quay.io
+  $ podman image ls
+  $ podman tag <image ID> <username>/railimage:versioningtag
+  $ podman push <username>/railimage:versioningtag
 ```
 
 deploy posgresql
@@ -91,23 +91,21 @@ $ kubectl get svc,pod,deployments
 1. go to deploy
 
 ``` bash
-cd deploy
+$ cd deploy
 ```
 
 2. Edit a image Tag version in  deploy/rails/deploy.yaml 
 ``` bash
- 
-nvim rails/deploy.yaml
+$ nvim rails/deploy.yaml
 ```
 
 
 3. run database migration/seed
 
 ``` bash
-$ kubectl exec rails-deployment-5f66f99bb9                         \
+$ kubectl exec rails-deployment-5f66f99bb9\
           -- bash -c                                            \
           'cd ~/app && RAILS_ENV=production bin/rake db:migrate' 
-
 ```
 
 4. and run a rail Service for allow Connection from external can access a Rail Pods
@@ -120,15 +118,16 @@ $ kubectl create -f rails/svc.yaml
 $ kubectl get svc,pod,deployments
 ```
 
-====
-
+Post Deploy
+=======
 Let's say that our app is now running in the pod named rails-deployment-5f66f99bb9
 
 To execute a rake task, for e.g. db:migrate on this pod, we can run the following command.
-
+```bash
 $ kubectl exec rails-deployment-5f66f99bb9                         \
           -- bash -c                                       \
           'cd ~/app && RAILS_ENV=production bin/rake db:migrate' 
+```
           
 Similarly, we can execute db:seed rake task as well.
 
