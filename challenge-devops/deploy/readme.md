@@ -14,9 +14,8 @@ How to Setup and deploy
   $ podman push <username>/railimage:versioningtag
 ```
 
-deploy posgresql
-# Prepare
-
+# deploy posgresql
+ 
 ## Create a Secret Key for posgresql
 
 Create a database Secret key for user and password to binding a information in the deployment file
@@ -71,7 +70,7 @@ nvim rails/deploy.yaml
 
 3. run database migration/seed
 
-$ $ kubectl exec rails-deployment-5f66f99bb9                         \
+ $ kubectl exec rails-deployment-5f66f99bb9                         \
           -- bash -c 
           'cd ~/app && RAILS_ENV=production bin/rake  db:setup'   
 
@@ -128,7 +127,7 @@ $ kubectl exec rails-deployment-5f66f99bb9                         \
           -- bash -c                                       \
           'cd ~/app && RAILS_ENV=production bin/rake db:migrate' 
 ```
-          
+
 Similarly, we can execute db:seed rake task as well.
 
 If we already have an automated flow for deployments on Kubernetes, we can make use of this approach to programmatically or conditionally run any rake task as per the needs.
