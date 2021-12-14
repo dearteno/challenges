@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgresql
+  labels:
+    app: rails-kube-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rails-kube-app
+      tier: database
+  template:
+    metadata:
+      name: postgresql
+      labels:
+        app: rails-kube-app
+        tier: database
+    spec:
+      volumes:
+      - name: postgresql-pv
+        persistentVolumeClaim:
+          claimName: postgresql-pvc
+      containers:
+      - name: postgresql
+        image: docker.io/postgres:13-alpine
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: "db-user"
+              key: "username"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "db-pass"
+              key: "password"
+        - name: POSTGRES_DB
+          value: "rails-kube-nprd"
+        - name: PGDATA
+          value: "/var/lib/postgresql/data/pgdata"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: postgresql-pv
