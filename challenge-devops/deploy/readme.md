@@ -83,7 +83,7 @@ $ kubectl create -f rails/svc.yaml
 5.Confirm a all pod & service run 
 ```bash
 $ kubectl get svc,pod,deployments
-
+```
 
 ### For Update
 
