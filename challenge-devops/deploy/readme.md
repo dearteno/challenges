@@ -69,11 +69,11 @@ nvim rails/deploy.yaml
 
 
 3. run database migration/seed
-
+```bash
  $ kubectl exec rails-deployment-5f66f99bb9                         \
           -- bash -c 
           'cd ~/app && RAILS_ENV=production bin/rake  db:setup'   
-
+```
 4. and run a rail service for allow Connection from external can access a rail application pod
 
 ```bash
